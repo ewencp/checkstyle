@@ -66,6 +66,15 @@ public class BlockCommentPositionTest extends AbstractPathTestSupport {
                         "InputBlockCommentPositionOnAnnotationField.java",
                         BlockCommentPosition::isOnAnnotationField, 4),
                 new BlockCommentPositionTestMetadata(
+                        "InputBlockCommentPositionHeaderWithClass.java",
+                        BlockCommentPosition::isOnPackage, 0),
+                new BlockCommentPositionTestMetadata(
+                        "InputBlockCommentPositionHeaderWithEnum.java",
+                        BlockCommentPosition::isOnPackage, 0),
+                new BlockCommentPositionTestMetadata(
+                        "InputBlockCommentPositionHeaderWithInterface.java",
+                        BlockCommentPosition::isOnPackage, 0),
+                new BlockCommentPositionTestMetadata(
                         "inputs/normal/package-info.java",
                         BlockCommentPosition::isOnPackage, 1),
                 new BlockCommentPositionTestMetadata(

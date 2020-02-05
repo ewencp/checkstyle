@@ -60,7 +60,7 @@ public final class BlockCommentPosition {
     /**
      * Node is on package definition.
      * @param blockComment DetailAST
-     * @return true if node is before package
+     * @return true if node is before package and the file matches package-info.java structure
      */
     public static boolean isOnPackage(DetailAST blockComment) {
         boolean result = isOnTokenWithAnnotation(blockComment, TokenTypes.PACKAGE_DEF);
@@ -74,6 +74,20 @@ public final class BlockCommentPosition {
             }
 
             result = nextSibling != null && nextSibling.getType() == TokenTypes.PACKAGE_DEF;
+        }
+
+        if (result) {
+            // Javadocs for packages only belong in a package-info.java, which should not contain
+            // any other content.
+
+            DetailAST nextSibling = blockComment.getNextSibling();
+
+            while (result && nextSibling != null) {
+                result = nextSibling.getType() != TokenTypes.CLASS_DEF
+                         && nextSibling.getType() != TokenTypes.INTERFACE_DEF
+                         && nextSibling.getType() != TokenTypes.ENUM_DEF;
+                nextSibling = nextSibling.getNextSibling();
+            }
         }
 
         return result;

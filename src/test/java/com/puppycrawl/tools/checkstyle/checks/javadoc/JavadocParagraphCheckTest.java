@@ -127,4 +127,14 @@ public class JavadocParagraphCheckTest extends AbstractModuleTestSupport {
         verify(checkConfig, getPath("InputJavadocParagraphIncorrect.java"), expected);
     }
 
+    @Test
+    public void testInvalidLocation() throws Exception {
+        final DefaultConfiguration checkConfig = createModuleConfig(JavadocParagraphCheck.class);
+        final String[] expected = {
+            // No error on line 3 despite "missing" <p> tag since it isn't interpreted as a
+            // javadoc comment
+            "12: " + getCheckMessage(MSG_TAG_AFTER),
+        };
+        verify(checkConfig, getPath("InputJavadocParagraphInvalidLocation.java"), expected);
+    }
 }
